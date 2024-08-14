@@ -9,7 +9,7 @@ let createNewUser = async (data) => {
       let hashPasswordFromBcrypt = await hashUserPassword(data.password);
       await db.User.create({
         email: data.email,
-        password: data.hashPasswordFromBcrypt,
+        password: hashPasswordFromBcrypt,
         firstName: data.firstName,
         lastName: data.lastName,
         address: data.address,
