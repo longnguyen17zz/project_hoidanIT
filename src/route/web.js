@@ -10,6 +10,9 @@ let initWebRoutes = (app) => {
   router.get("/longhq", (req, res) => {
     return res.send("Welcome with LongHQ");
   });
+  router.post("/post-crud", homeController.postCRUD);
+
+  router.get("/crud", homeController.getCRUD);
 
   return app.use("/", router);
 };

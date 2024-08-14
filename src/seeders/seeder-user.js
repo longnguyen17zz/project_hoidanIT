@@ -13,6 +13,7 @@ module.exports = {
         gender: 1,
         image: "",
         roleId: "admin",
+        positionId: "",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
