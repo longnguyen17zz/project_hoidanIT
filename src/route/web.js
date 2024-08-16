@@ -14,6 +14,8 @@ let initWebRoutes = (app) => {
 
   router.get("/crud", homeController.getCRUD);
 
+  router.get("/get-crud", homeController.displayGetCRUD);
+
   return app.use("/", router);
 };
 
