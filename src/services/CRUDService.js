@@ -3,7 +3,7 @@ import db from "../models/index";
 
 const salt = bcrypt.genSaltSync(10);
 
-let createNewUser = async (data) => {
+let createNewUser = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       let hashPasswordFromBcrypt = await hashUserPassword(data.password);
@@ -35,7 +35,7 @@ let hashUserPassword = (password) => {
   });
 };
 
-let getAllUser = async () => {
+let getAllUser = () => {
   return new Promise(async (resolve, reject) => {
     try {
       let users = db.User.findAll({
@@ -47,4 +47,49 @@ let getAllUser = async () => {
     }
   });
 };
-module.exports = { createNewUser, getAllUser };
+
+let getUserInfoById = (userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findOne({
+        where: { id: userId },
+        raw: true,
+      });
+      if (user) {
+        resolve(user);
+      } else {
+        resolve([]);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let updateUserDataById = async (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await db.User.update(
+        {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          address: data.address,
+        },
+        {
+          where: {
+            id: data.id,
+          },
+        }
+      );
+      resolve();
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+module.exports = {
+  createNewUser,
+  getAllUser,
+  getUserInfoById,
+  updateUserDataById,
+};
