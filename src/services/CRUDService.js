@@ -69,7 +69,7 @@ let getUserInfoById = (userId) => {
 let updateUserDataById = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      await db.User.update(
+      db.User.update(
         {
           firstName: data.firstName,
           lastName: data.lastName,
@@ -87,9 +87,31 @@ let updateUserDataById = async (data) => {
     }
   });
 };
+
+let deleteUserDataById = async (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findOne({
+        where: { id: id },
+      });
+      if (user) {
+        await db.User.destroy({
+          where: {
+            id: id,
+          },
+        });
+      }
+
+      resolve();
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 module.exports = {
   createNewUser,
   getAllUser,
   getUserInfoById,
   updateUserDataById,
+  deleteUserDataById,
 };
